@@ -1,34 +1,97 @@
 {
   "settings": {
     "phone": "15797751092",
-    "imgFolder": "kızlar foto/"
+    "imgFolder": "../kızlar foto/"
   },
-  "vip": [
+  "existing": [
     {
-      "id": 1,
-      "order": 1,
       "name": "DİLAN",
-      "img": "kızlar foto/DİLAN.png",
+      "img": "../kızlar foto/DİLAN.png",
+      "meta": "Mersin · Ev",
       "info": "Bilgi eklenecek.",
-      "active": true
+      "order": 1
     },
     {
-      "id": 2,
-      "order": 2,
       "name": "SİMAY",
-      "img": "kızlar foto/SİMAY.png",
+      "img": "../kızlar foto/SİMAY.png",
+      "meta": "Mersin · Ev",
       "info": "Bilgi eklenecek.",
-      "active": true
+      "order": 2
     },
     {
-      "id": 3,
-      "order": 3,
       "name": "YEŞİM",
-      "img": "kızlar foto/YEŞİM.png",
+      "img": "../kızlar foto/YEŞİM.png",
+      "meta": "Mersin · Ev",
       "info": "Bilgi eklenecek.",
-      "active": true
+      "order": 3
+    },
+    {
+      "name": "ESİN",
+      "img": "../kızlar foto/ESİN.png",
+      "meta": "Mersin · Ev ve Otel",
+      "info": "Bilgi eklenecek.",
+      "order": 4
+    },
+    {
+      "name": "AZRA",
+      "img": "../kızlar foto/AZRA.png",
+      "meta": "Mersin · Ev",
+      "info": "Bilgi eklenecek.",
+      "order": 5
+    },
+    {
+      "name": "ZEYNO",
+      "img": "../kızlar foto/ZEYNO.png",
+      "meta": "Mersin · Ev ve Otel",
+      "info": "Bilgi eklenecek.",
+      "order": 6
+    },
+    {
+      "name": "DERYA",
+      "img": "../kızlar foto/DERYA.png",
+      "meta": "Mersin · Ev",
+      "info": "Bilgi eklenecek.",
+      "order": 7
+    },
+    {
+      "name": "EBRU",
+      "img": "../kızlar foto/EBRU.png",
+      "meta": "Mersin · Ev",
+      "info": "Bilgi eklenecek.",
+      "order": 8
+    },
+    {
+      "name": "BEYZA",
+      "img": "../kızlar foto/BEYZA.png",
+      "meta": "Mersin · Ev",
+      "info": "Bilgi eklenecek.",
+      "order": 9
+    },
+    {
+      "name": "ÇİLEM",
+      "img": "../kızlar foto/ÇİLEM.png",
+      "meta": "Mersin · Ev",
+      "info": "Bilgi eklenecek.",
+      "order": 10
+    },
+    {
+      "name": "SUZAN",
+      "img": "../kızlar foto/SUZAN.png",
+      "meta": "Mersin · Ev ve Otel",
+      "info": "Bilgi eklenecek.",
+      "order": 11
+    },
+    {
+      "name": "FULYA",
+      "img": "../kızlar foto/FULYA.png",
+      "meta": "Mersin · Ev",
+      "info": "Bilgi eklenecek.",
+      "order": 12
     }
   ],
+  "vip": [],
   "profiles": [],
-  "hidden": []
+  "hidden": [
+    "FULYA"
+  ]
 }
