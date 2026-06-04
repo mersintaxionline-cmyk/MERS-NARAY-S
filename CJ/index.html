@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CJ Admin Panel - Mersin Arayış</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;background:radial-gradient(circle at 15% 20%,rgba(0,245,255,.18),transparent 40%),radial-gradient(circle at 85% 80%,rgba(255,0,153,.18),transparent 40%),linear-gradient(135deg,#000814,#001d3d,#000814);color:#fff;font-family:Arial,sans-serif;padding:18px}
+.wrap{max-width:1240px;margin:auto}
+.card{position:relative;border-radius:22px;padding:22px;background:rgba(0,20,40,.82);border:1px solid rgba(0,245,255,.35);box-shadow:0 0 35px rgba(0,245,255,.25),0 0 55px rgba(255,0,153,.15);overflow:hidden;margin-bottom:18px}
+.card:before{content:"";position:absolute;inset:-2px;z-index:-1;background:conic-gradient(#00f5ff,#ff0099,#ffd700,#00f5ff);animation:spin 4s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+h1,h2,h3{font-family:Orbitron,sans-serif;letter-spacing:2px}
+h1{font-size:24px;color:#ffd700;text-align:center;margin-bottom:14px}
+h2{font-size:16px;color:#00f5ff;margin-bottom:12px}
+h3{font-size:13px;color:#ffd700;margin-bottom:8px}
+.login{max-width:420px;margin:12vh auto}
+label{font-size:12px;opacity:.85;display:block;margin-top:4px}
+input,textarea,select{width:100%;padding:12px;border-radius:12px;border:1px solid rgba(0,245,255,.35);background:rgba(0,0,0,.45);color:#fff;margin:6px 0 12px;outline:none}
+textarea{min-height:92px;resize:vertical}
+button,.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:12px 18px;font-weight:800;color:#fff;background:linear-gradient(135deg,#00f5ff,#ff0099);cursor:pointer;text-decoration:none;box-shadow:0 0 18px rgba(0,245,255,.35)}
+button:disabled{opacity:.45;cursor:not-allowed}
+.danger{background:linear-gradient(135deg,#ff0040,#ff0099)}
+.ok{background:linear-gradient(135deg,#18c95f,#25D366)}
+.gold{background:linear-gradient(135deg,#ffd700,#ff8c00);color:#111}
+.blue{background:linear-gradient(135deg,#0077ff,#00f5ff)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.list{display:grid;gap:10px}
+.row{display:grid;grid-template-columns:62px 1fr auto;gap:10px;align-items:center;padding:10px;border:1px solid rgba(255,255,255,.12);border-radius:16px;background:rgba(255,255,255,.05)}
+.row.inactive{opacity:.48;filter:grayscale(1)}
+.row img{width:62px;height:62px;object-fit:cover;border-radius:12px;background:#111}
+.muted{opacity:.75;font-size:13px;line-height:1.5}
+.small{font-size:12px;opacity:.72}
+.topbar{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px}
+.hide{display:none!important}
+.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.status{font-size:13px;color:#cfffff;margin-top:10px;line-height:1.5;padding:10px;border-radius:12px;background:rgba(0,245,255,.08);border:1px solid rgba(0,245,255,.18)}
+.preview{width:86px;height:86px;border-radius:14px;object-fit:cover;border:1px solid rgba(0,245,255,.35);display:none;margin-bottom:10px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.tab{background:rgba(255,255,255,.08);border:1px solid rgba(0,245,255,.25)}
+.tab.active{background:linear-gradient(135deg,#00f5ff,#ff0099)}
+.counter{display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:28px;border-radius:999px;background:rgba(255,215,0,.18);border:1px solid rgba(255,215,0,.45);color:#ffd700;font-weight:800}
+.badge{display:inline-block;padding:3px 8px;border-radius:999px;background:rgba(0,245,255,.12);border:1px solid rgba(0,245,255,.35);font-size:11px;margin-top:5px}
+.inline{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+hr{border:0;border-top:1px solid rgba(255,255,255,.12);margin:14px 0}
+.publish-overlay{display:none;position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,.86);backdrop-filter:blur(9px);align-items:center;justify-content:center;text-align:center;padding:20px}.publish-overlay.active{display:flex}.publish-box{width:100%;max-width:440px;border-radius:26px;padding:28px;background:linear-gradient(145deg,rgba(0,20,40,.96),rgba(36,0,42,.96));border:1px solid rgba(0,245,255,.45);box-shadow:0 0 45px rgba(0,245,255,.4),0 0 60px rgba(255,0,153,.25)}.loader{width:74px;height:74px;border-radius:50%;margin:0 auto 18px;border:6px solid rgba(255,255,255,.12);border-top-color:#00f5ff;border-right-color:#ff0099;animation:spin 1s linear infinite}.publish-title{font-family:Orbitron,sans-serif;color:#ffd700;font-weight:900;letter-spacing:2px;margin-bottom:10px}.publish-msg{color:#cfffff;font-size:14px;line-height:1.6}
+@media(max-width:860px){.grid,.grid3,.inline{grid-template-columns:1fr}.topbar{display:block}.btn,button{width:100%;margin-top:8px}.row{grid-template-columns:54px 1fr}.row .actions{grid-column:1/3}.row img{width:54px;height:54px}}
+</style>
+</head>
+<body>
+<div id="publishOverlay" class="publish-overlay"><div class="publish-box"><div class="loader"></div><div class="publish-title">YAYINLANIYOR</div><div id="publishMsg" class="publish-msg">Değişiklikler hazırlanıyor, GitHub commit atılıyor...</div></div></div>
+<div class="wrap">
+  <div id="loginBox" class="card login">
+    <h1>CJ ADMIN</h1>
+    <p class="muted">Panel yolu: /CJ/ — Şifre: WhatsApp numarası</p>
+    <input id="pass" type="password" placeholder="Şifre">
+    <button onclick="login()">GİRİŞ YAP</button>
+  </div>
+
+  <div id="panel" class="hide">
+    <div class="card">
+      <div class="topbar">
+        <div>
+          <h1>CJ ADMIN PANEL</h1>
+          <p class="muted">Normal ilan, VIP vitrin, aktif/pasif, sıra düzeni, local resim, JSON yedek ve GitHub commit tetikleme sistemi.</p>
+        </div>
+        <div class="actions">
+          <a class="btn ok" href="../index.html">SİTEYE DÖN</a>
+          <button class="gold" onclick="publishNow()">🚀 YAYINLA</button>
+          <button onclick="downloadJson()">JSON İNDİR</button>
+          <button class="danger" onclick="logout()">ÇIKIŞ</button>
+        </div>
+      </div>
+
+      <div class="grid3">
+        <div><h3>GENEL WHATSAPP</h3><input id="phone" placeholder="15797751092"><button onclick="savePhone()">NUMARAYI KAYDET</button></div>
+        <div><h3>RESİM KLASÖRÜ</h3><input id="imgFolder" placeholder="../kızlar foto/"><button onclick="saveFolder()">KLASÖRÜ KAYDET</button></div>
+        <div><h3>DURUM</h3><div id="status" class="status">Hazır.</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="tabs">
+        <button id="tabAdd" class="tab active" onclick="showTab('add')">EKLE / DÜZENLE</button>
+        <button id="tabNormal" class="tab" onclick="showTab('normal')">NORMAL İLANLAR <span id="normalCount" class="counter">0</span></button>
+        <button id="tabVip" class="tab" onclick="showTab('vip')">VIP VİTRİN <span id="vipCount" class="counter">0</span></button>
+        <button id="tabHidden" class="tab" onclick="showTab('hidden')">GİZLENENLER <span id="hiddenCount" class="counter">0</span></button>
+      </div>
+
+      <div id="tabPageAdd">
+        <div class="grid">
+          <div class="card">
+            <h2>YENİ NORMAL İLAN EKLE</h2>
+            <label>İsim</label><input id="pName" placeholder="AYŞE" oninput="autoImg('pName','pImg')">
+            <label>Resim yolu / URL</label><input id="pImg" placeholder="../kızlar foto/AYŞE.png">
+            <label>Local resim seç</label><input id="pFile" type="file" accept="image/*" onchange="readImageFile(this,'pImg','pPreview')">
+            <img id="pPreview" class="preview">
+            <div class="inline">
+              <div><label>Alt bilgi</label><input id="pMeta" placeholder="Mersin · Ev"></div>
+              <div><label>Sıra</label><input id="pOrder" type="number" placeholder="Otomatik"></div>
+            </div>
+            <label>Bilgi metni</label><textarea id="pInfo" placeholder="Bilgi eklenecek."></textarea>
+            <button onclick="addProfile()">NORMAL İLAN EKLE</button>
+          </div>
+
+          <div class="card">
+            <h2>YENİ VIP EKLE</h2>
+            <label>İsim</label><input id="vipName" placeholder="DİLAN" oninput="autoImg('vipName','vipImg')">
+            <label>Resim yolu / URL</label><input id="vipImg" placeholder="../kızlar foto/DİLAN.png">
+            <label>Local resim seç</label><input id="vipFile" type="file" accept="image/*" onchange="readImageFile(this,'vipImg','vipPreview')">
+            <img id="vipPreview" class="preview">
+            <div class="inline">
+              <div><label>Alt başlık</label><input id="vipMeta" placeholder="VIP · Mersin"></div>
+              <div><label>Sıra</label><input id="vipOrder" type="number" placeholder="Otomatik"></div>
+            </div>
+            <label>Bilgi metni</label><textarea id="vipInfo" placeholder="Bilgi eklenecek."></textarea>
+            <button class="gold" onclick="addVip()">VIP EKLE</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="tabPageNormal" class="hide">
+        <h2>NORMAL İLANLAR</h2>
+        <p class="muted">Buradan ilanı silebilir, pasife alabilir, VIP vitrine taşıyabilir veya sırasını değiştirebilirsin. Yeni eklenen/silinen ilan burada anlık görünür.</p>
+        <div id="profileList" class="list"></div>
+      </div>
+
+      <div id="tabPageVip" class="hide">
+        <h2>VIP VİTRİN</h2>
+        <p class="muted">VIP vitrine çıkacak kişiler burada görünür. İstersen normal ilana geri alabilir, aktif/pasif yapabilir veya silebilirsin.</p>
+        <div id="vipList" class="list"></div>
+      </div>
+
+      <div id="tabPageHidden" class="hide">
+        <h2>MEVCUT İLAN GİZLE / GERİ AL</h2>
+        <p class="muted">Eski sabit ilanları kaldırmak için gizleme sistemini kullan. Gizlenenler ana sayfada görünmez.</p>
+        <select id="existingSelect"></select>
+        <button onclick="hideExisting()">SEÇİLİ SABİT İLANI GİZLE</button>
+        <hr>
+        <div id="hiddenList" class="list"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var PASSWORD='15797751092';
+var DEFAULT_PHONE='15797751092';
+var DEFAULT_FOLDER='../kızlar foto/';
+var DEFAULT_IMG='../kızlar foto/DİLAN.png';
+var githubTimer=null;
+
+var EXISTING=[
+{"name":"DİLAN","img":"../kızlar foto/DİLAN.png","meta":"Mersin · Ev","info":"Bilgi eklenecek.","order":1},
+{"name":"SİMAY","img":"../kızlar foto/SİMAY.png","meta":"Mersin · Ev","info":"Bilgi eklenecek.","order":2},
+{"name":"YEŞİM","img":"../kızlar foto/YEŞİM.png","meta":"Mersin · Ev","info":"Bilgi eklenecek.","order":3},
+{"name":"ESİN","img":"../kızlar foto/ESİN.png","meta":"Mersin · Ev ve Otel","info":"Bilgi eklenecek.","order":4},
+{"name":"AZRA","img":"../kızlar foto/AZRA.png","meta":"Mersin · Ev","info":"Bilgi eklenecek.","order":5},
+{"name":"ZEYNO","img":"../kızlar foto/ZEYNO.png","meta":"Mersin · Ev ve Otel","info":"Bilgi eklenecek.","order":6},
+{"name":"DERYA","img":"../kızlar foto/DERYA.png","meta":"Mersin · Ev","info":"Bilgi eklenecek.","order":7},
+{"name":"EBRU","img":"../kızlar foto/EBRU.png","meta":"Mersin · Ev","info":"Bilgi eklenecek.","order":8},
+{"name":"BEYZA","img":"../kızlar foto/BEYZA.png","meta":"Mersin · Ev","info":"Bilgi eklenecek.","order":9},
+{"name":"ÇİLEM","img":"../kızlar foto/ÇİLEM.png","meta":"Mersin · Ev","info":"Bilgi eklenecek.","order":10},
+{"name":"SUZAN","img":"../kızlar foto/SUZAN.png","meta":"Mersin · Ev ve Otel","info":"Bilgi eklenecek.","order":11},
+{"name":"FULYA","img":"../kızlar foto/FULYA.png","meta":"Mersin · Ev","info":"Bilgi eklenecek.","order":12}
+];
+
+function jget(k,f){try{var v=localStorage.getItem(k);return v?JSON.parse(v):f}catch(e){return f}}
+function jset(k,v){localStorage.setItem(k,JSON.stringify(v));markDirty();load()}
+function esc(s){return String(s||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function val(id){return document.getElementById(id).value.trim()}
+function clear(ids){ids.forEach(function(id){document.getElementById(id).value=''})}
+function setStatus(t){var el=document.getElementById('status'); if(el) el.innerText=t}
+function getSettings(){return jget('cj_site_settings',{phone:DEFAULT_PHONE,imgFolder:DEFAULT_FOLDER})}
+function imageByName(n){var f=(getSettings().imgFolder||DEFAULT_FOLDER); if(!/\/$/.test(f)) f+='/'; return f + String(n||'').trim().toUpperCase() + '.png'}
+function activeText(v){return v===false?'PASİF':'AKTİF'}
+function sortList(list){return (list||[]).slice().sort(function(a,b){return (Number(a.order)||9999)-(Number(b.order)||9999)})}
+function normalizeOrders(list){return sortList(list).map(function(p,i){p.order=i+1;return p})}
+
+function login(){if(document.getElementById('pass').value===PASSWORD){sessionStorage.setItem('cj_admin','1');showPanel()}else alert('Şifre hatalı')}
+function logout(){sessionStorage.removeItem('cj_admin');location.reload()}
+function showPanel(){document.getElementById('loginBox').classList.add('hide');document.getElementById('panel').classList.remove('hide');load()}
+function showTab(t){
+    ['add','normal','vip','hidden'].forEach(function(x){
+        document.getElementById('tabPage'+cap(x)).classList.toggle('hide',x!==t);
+        document.getElementById('tab'+cap(x)).classList.toggle('active',x===t);
+    });
+}
+function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+
+function getAllData(){
+    return {
+        settings:getSettings(),
+        existing:EXISTING,
+        vip:jget('cj_vip_profiles',[]),
+        profiles:jget('cj_extra_profiles',[]),
+        hidden:jget('cj_hidden_profiles',[])
+    };
+}
+
+function savePhone(){
+    var set=getSettings();
+    set.phone=val('phone').replace(/\D/g,'')||DEFAULT_PHONE;
+    jset('cj_site_settings',set);
+    alert('Numara kaydedildi: '+set.phone)
+}
+function saveFolder(){
+    var set=getSettings();
+    set.imgFolder=val('imgFolder')||DEFAULT_FOLDER;
+    jset('cj_site_settings',set);
+    alert('Resim klasörü kaydedildi: '+set.imgFolder)
+}
+
+function autoImg(nameId,imgId){
+    var n=val(nameId);
+    if(!n) return;
+    var img=document.getElementById(imgId);
+    if(!img.value || img.value.indexOf('kızlar foto')>-1 || img.value.indexOf('data:image')!==0){
+        img.value=imageByName(n);
+    }
+}
+
+function addProfile(){
+    var n=val('pName').toUpperCase(); if(!n){alert('İsim yaz');return}
+    var list=jget('cj_extra_profiles',[]);
+    list.push({
+        id:Date.now(),
+        order:Number(val('pOrder'))||list.length+1,
+        name:n,
+        img:val('pImg')||imageByName(n),
+        meta:val('pMeta')||'Mersin',
+        info:val('pInfo')||'Bilgi eklenecek.',
+        active:true
+    });
+    jset('cj_extra_profiles',normalizeOrders(list));
+    clear(['pName','pImg','pMeta','pInfo','pOrder']);
+    document.getElementById('pPreview').style.display='none';
+    showTab('normal');
+}
+
+function addVip(){
+    var n=val('vipName').toUpperCase(); if(!n){alert('İsim yaz');return}
+    var list=jget('cj_vip_profiles',[]);
+    list.push({
+        id:Date.now(),
+        order:Number(val('vipOrder'))||list.length+1,
+        name:n,
+        img:val('vipImg')||imageByName(n),
+        meta:val('vipMeta')||'VIP · Mersin',
+        info:val('vipInfo')||'Bilgi eklenecek.',
+        active:true
+    });
+    jset('cj_vip_profiles',normalizeOrders(list));
+    clear(['vipName','vipImg','vipMeta','vipInfo','vipOrder']);
+    document.getElementById('vipPreview').style.display='none';
+    showTab('vip');
+}
+
+function delProfile(id){if(!confirm('Normal ilan silinsin mi?'))return;var l=jget('cj_extra_profiles',[]).filter(function(p){return p.id!==id});jset('cj_extra_profiles',normalizeOrders(l))}
+function delVip(id){if(!confirm('VIP silinsin mi?'))return;var l=jget('cj_vip_profiles',[]).filter(function(p){return p.id!==id});jset('cj_vip_profiles',normalizeOrders(l))}
+function toggleProfile(id){var l=jget('cj_extra_profiles',[]);l.forEach(function(p){if(p.id===id)p.active=p.active===false?true:false});jset('cj_extra_profiles',l)}
+function toggleVip(id){var l=jget('cj_vip_profiles',[]);l.forEach(function(p){if(p.id===id)p.active=p.active===false?true:false});jset('cj_vip_profiles',l)}
+
+function moveProfile(id,dir){var l=normalizeOrders(jget('cj_extra_profiles',[]));moveOrder(l,id,dir);jset('cj_extra_profiles',normalizeOrders(l))}
+function moveVip(id,dir){var l=normalizeOrders(jget('cj_vip_profiles',[]));moveOrder(l,id,dir);jset('cj_vip_profiles',normalizeOrders(l))}
+function moveOrder(list,id,dir){
+    var i=list.findIndex(function(p){return p.id===id});
+    var j=i+dir;
+    if(i<0||j<0||j>=list.length)return;
+    var t=list[i].order; list[i].order=list[j].order; list[j].order=t;
+}
+
+function promoteToVip(id){
+    var profiles=jget('cj_extra_profiles',[]);
+    var i=profiles.findIndex(function(p){return p.id===id});
+    if(i<0)return;
+    var p=profiles.splice(i,1)[0];
+    var vip=jget('cj_vip_profiles',[]);
+    p.order=vip.length+1; p.meta=p.meta||'VIP · Mersin'; p.active=true;
+    vip.push(p);
+    jset('cj_extra_profiles',normalizeOrders(profiles));
+    localStorage.setItem('cj_vip_profiles',JSON.stringify(normalizeOrders(vip)));
+    scheduleCommit(); load(); showTab('vip');
+}
+
+function demoteToNormal(id){
+    var vip=jget('cj_vip_profiles',[]);
+    var i=vip.findIndex(function(p){return p.id===id});
+    if(i<0)return;
+    var p=vip.splice(i,1)[0];
+    var profiles=jget('cj_extra_profiles',[]);
+    p.order=profiles.length+1; p.meta=p.meta||'Mersin'; p.active=true;
+    profiles.push(p);
+    jset('cj_vip_profiles',normalizeOrders(vip));
+    localStorage.setItem('cj_extra_profiles',JSON.stringify(normalizeOrders(profiles)));
+    scheduleCommit(); load(); showTab('normal');
+}
+
+function hideExisting(){var s=document.getElementById('existingSelect').value;if(!s)return;var h=jget('cj_hidden_profiles',[]);if(h.indexOf(s)===-1)h.push(s);jset('cj_hidden_profiles',h)}
+function unhide(i){var h=jget('cj_hidden_profiles',[]);h.splice(i,1);jset('cj_hidden_profiles',h)}
+function testWhatsapp(name){
+    var phone=(getSettings().phone||DEFAULT_PHONE).replace(/\D/g,'');
+    var msg='Merhaba '+name+' ile iletişime geçmek istiyorum';
+    window.open('https://wa.me/'+phone+'?text='+encodeURIComponent(msg),'_blank');
+}
+function row(p,type){
+    var safeName=encodeURIComponent(p.name||'');
+    var inactive=p.active===false?' inactive':'';
+    var moveUp=type==='vip'?'moveVip':'moveProfile';
+    var moveDown=type==='vip'?'moveVip':'moveProfile';
+    var toggle=type==='vip'?'toggleVip':'toggleProfile';
+    var del=type==='vip'?'delVip':'delProfile';
+    var transfer=type==='vip'
+        ? '<button class="blue" onclick="demoteToNormal('+p.id+')">NORMALE AL</button>'
+        : '<button class="gold" onclick="promoteToVip('+p.id+')">VIP YAP</button>';
+    return '<div class="row'+inactive+'"><img src="'+esc(p.img||DEFAULT_IMG)+'" onerror="this.src=\''+DEFAULT_IMG+'\'"><div><b>'+esc(p.name)+'</b><div class="muted">'+esc(p.info||p.meta||'')+'</div><span class="badge">Sıra: '+esc(p.order||'-')+' · '+activeText(p.active)+'</span></div><div class="actions"><button onclick="testWhatsapp(decodeURIComponent(\''+safeName+'\'))">WP</button><button onclick="'+moveUp+'('+p.id+',-1)">↑</button><button onclick="'+moveDown+'('+p.id+',1)">↓</button><button onclick="'+toggle+'('+p.id+')">'+(p.active===false?'AKTİF ET':'PASİF ET')+'</button>'+transfer+'<button class="danger" onclick="'+del+'('+p.id+')">SİL</button></div></div>';
+}
+
+function load(){
+    var set=getSettings();
+    document.getElementById('phone').value=set.phone||DEFAULT_PHONE;
+    document.getElementById('imgFolder').value=set.imgFolder||DEFAULT_FOLDER;
+
+    var vip=sortList(jget('cj_vip_profiles',[]));
+    var pr=sortList(jget('cj_extra_profiles',[]));
+    var h=jget('cj_hidden_profiles',[]);
+
+    document.getElementById('vipCount').innerText=vip.length;
+    document.getElementById('normalCount').innerText=pr.length;
+    document.getElementById('hiddenCount').innerText=h.length;
+
+    document.getElementById('vipList').innerHTML=vip.length?vip.map(function(p){return row(p,'vip')}).join(''):'<p class="muted">Henüz VIP eklenmedi.</p>';
+    document.getElementById('profileList').innerHTML=pr.length?pr.map(function(p){return row(p,'normal')}).join(''):'<p class="muted">Henüz ekstra ilan eklenmedi.</p>';
+
+    document.getElementById('hiddenList').innerHTML=h.length?h.map(function(n,i){return '<div class="row"><div></div><b>'+esc(n)+'</b><button onclick="unhide('+i+')">GERİ AL</button></div>'}).join(''):'<p class="muted">Gizlenen ilan yok.</p>';
+    document.getElementById('existingSelect').innerHTML=EXISTING.map(function(p){return '<option value="'+esc(p.name)+'">'+esc(p.name)+' - '+esc(p.meta)+'</option>'}).join('');
+}
+
+function readImageFile(input,targetId,previewId){
+    var file=input.files&&input.files[0]; if(!file)return;
+    var r=new FileReader();
+    r.onload=function(e){
+        document.getElementById(targetId).value=e.target.result;
+        var img=document.getElementById(previewId); img.src=e.target.result; img.style.display='block';
+    };
+    r.readAsDataURL(file);
+}
+function downloadJson(){
+    var blob=new Blob([JSON.stringify(getAllData(),null,2)],{type:'application/json'});
+    var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='site-data.json';a.click();URL.revokeObjectURL(a.href);
+}
+var cjDirty=false;
+function markDirty(){cjDirty=true;setStatus('Yerel değişiklik kaydedildi. Yayına almak için YAYINLA butonuna bas.');}
+function scheduleCommit(){markDirty()}
+function setPublishOverlay(on,msg){
+    var o=document.getElementById('publishOverlay');
+    var m=document.getElementById('publishMsg');
+    if(m&&msg)m.innerText=msg;
+    if(o)o.classList.toggle('active',!!on);
+}
+function publishNow(){
+    setPublishOverlay(true,'Değişiklikler hazırlanıyor, GitHub commit atılıyor...');
+    setStatus('Yayınlama başladı...');
+    return fetch('/api/github-commit',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({filePath:'site-data.json',content:JSON.stringify(getAllData(),null,2),message:'CJ panel yayın güncellemesi'})
+    }).then(function(r){return r.json().catch(function(){return {ok:false,error:'Sunucudan geçersiz cevap geldi'}})}).then(function(res){
+        if(res.ok){
+            cjDirty=false;
+            setStatus('Yayınlandı. Commit: '+(res.commit||''));
+            setPublishOverlay(true,'Yayın başarılı. Site birkaç saniye içinde güncel veriyi okuyacak.');
+            setTimeout(function(){setPublishOverlay(false)},1600);
+        }else{
+            setStatus('Yayınlanamadı: '+(res.error||'Bilinmeyen hata'));
+            setPublishOverlay(true,'Yayınlanamadı: '+(res.error||'Bilinmeyen hata'));
+            setTimeout(function(){setPublishOverlay(false)},2600);
+        }
+    }).catch(function(err){
+        setStatus('Yayınlanamadı: '+err.message);
+        setPublishOverlay(true,'Yayınlanamadı. Vercel API veya internet bağlantısı hazır değil: '+err.message);
+        setTimeout(function(){setPublishOverlay(false)},3200);
+    });
+}
+function commitNow(){return publishNow()}
+window.addEventListener('beforeunload',function(e){if(cjDirty){e.preventDefault();e.returnValue='Yayınlanmamış değişiklik var.'}});
+if(sessionStorage.getItem('cj_admin')==='1')showPanel();
+</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+MERSİN ARAYIŞ FINAL PAKET
+
+Panel: /CJ/
+Şifre: 15797751092
+
+Yayınla butonu /api/github-commit adresini çağırır. Vercel Environment Variables:
+GITHUB_OWNER=github_kullanici_adin
+GITHUB_REPO=repo_adi
+GITHUB_BRANCH=main
+GITHUB_TOKEN=github_personal_access_token
+
+Resim klasörü: kızlar foto/
+Dosya formatı: İSİM.png
+Logo/Favicon: logo.png ve favicon.png
